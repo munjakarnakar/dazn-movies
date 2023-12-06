@@ -10,13 +10,13 @@ import {
   Query,
   Req,
   Res,
-  ValidationPipe,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { MoviesService } from './movies.service';
 import { MoiveDTO } from './dto/addMoive.dto';
 import { UpdateMoiveDTO } from './dto/updateMoive.dto';
+import { UpdateParamDTO } from './dto/updateParam.dto';
 
 @Controller('movies')
 @ApiTags('Movies')
@@ -44,7 +44,7 @@ export class MoviesController {
     },
   })
   async list(
-    @Query() queryParam: String,
+    @Query() queryParam: string,
     @Req() req: Request,
     @Res() res: Response,
   ) {
@@ -97,7 +97,7 @@ export class MoviesController {
     },
   })
   async updateMovie(
-    @Param() param: Object,
+    @Param() param: UpdateParamDTO,
     @Body() body: UpdateMoiveDTO,
     @Req() req: Request,
     @Res() res: Response,
