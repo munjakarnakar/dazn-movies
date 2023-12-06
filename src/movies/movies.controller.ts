@@ -128,7 +128,7 @@ export class MoviesController {
     },
   })
   async deleteMovie(
-    @Param() param: Object,
+    @Param() param: UpdateParamDTO,
     @Req() req: Request,
     @Res() res: Response,
   ) {
