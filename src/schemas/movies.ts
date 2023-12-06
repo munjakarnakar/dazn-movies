@@ -4,44 +4,40 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export type MoviesDocument = Movies & Document;
 @Schema({ collection: 'movies' })
-
 export class Movies {
+  @Prop()
+  name: string;
 
-    @Prop()
-    name: string;
+  @Prop()
+  genre: string;
 
-    @Prop()
-    genre: string;
+  @Prop()
+  rating: number;
 
-    @Prop()
-    rating: number;
+  @Prop({
+    default: false,
+  })
+  is_deleted: boolean;
 
-    @Prop(
-        {
-            default: false
-        }
-    )
-    is_deleted: boolean;
+  @Prop()
+  streamingLink: string;
 
-    @Prop()
-    streamingLink: string;
+  @Prop({
+    type: Date,
+    default: new Date(),
+  })
+  created_date_time: Date;
 
-    @Prop({
-        type: Date,
-        default: new Date()
-    })
-    created_date_time: Date;
+  @Prop({
+    type: Date,
+  })
+  updated_date_time: Date;
 
-    @Prop({
-        type: Date
-    })
-    updated_date_time: Date;
+  @Prop()
+  created_by: string;
 
-    @Prop()
-    created_by: string;
-
-    @Prop()
-    updated_by: string;
+  @Prop()
+  updated_by: string;
 }
 
 export const MoviesSchema = SchemaFactory.createForClass(Movies);

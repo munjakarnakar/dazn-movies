@@ -31,7 +31,7 @@ describe('AppController (e2e)', () => {
         rating: 5,
         streamingLink: 'https://www.movies.com/animal',
       })
-      .expect(200)
+      .expect(200);
   });
 
   // it('/movies (POST) - Add movie - 400', () => {
@@ -46,11 +46,8 @@ describe('AppController (e2e)', () => {
   //     .expect(400)
   // });
 
-
   it('/movies (GET) - List movies', () => {
-    return request(app.getHttpServer())
-      .get('/movies')
-      .expect(200)
+    return request(app.getHttpServer()).get('/movies').expect(200);
     // .expect({
     //   data: [
     //     {
@@ -64,9 +61,7 @@ describe('AppController (e2e)', () => {
   });
 
   it('/movies?q={string} (Get) - List movies with search', () => {
-    return request(app.getHttpServer())
-      .get('/movies?q=das')
-      .expect(200)
+    return request(app.getHttpServer()).get('/movies?q=das').expect(200);
     //.expect({ message: 'Successfully added' });
   });
 
@@ -74,17 +69,16 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .put('/movies/65702b617c0b40d776056c86')
       .send({
-        "genre": "DRAMA"
+        genre: 'DRAMA',
       })
-      .expect(200)
+      .expect(200);
     //.expect({ message: 'Successfully added' });
   });
 
   it('/movies (Delete) - Delete movie', () => {
     return request(app.getHttpServer())
       .delete('/movies/65702b617c0b40d776056c86')
-      .expect(200)
+      .expect(200);
     //.expect({ message: 'Successfully added' });
   });
-
 });

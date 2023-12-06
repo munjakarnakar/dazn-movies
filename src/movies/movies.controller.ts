@@ -21,8 +21,7 @@ import { UpdateMoiveDTO } from './dto/updateMoive.dto';
 @Controller('movies')
 @ApiTags('Movies')
 export class MoviesController {
-
-  constructor(private readonly moviesService: MoviesService) { }
+  constructor(private readonly moviesService: MoviesService) {}
 
   @Get('/')
   @ApiOperation({ summary: 'List all the movies in the lobby' })
@@ -32,21 +31,29 @@ export class MoviesController {
       example: {
         movies: [
           {
-            "_id": "6570253e38b34bf129dc3552",
-            "name": "ANIMAL",
-            "genre": "ACTION",
-            "rating": 4,
-            "is_deleted": false,
-            "streamingLink": "https://www.movies.com/animal",
-            "created_date_time": "2023-12-06T07:39:07.603Z",
+            _id: '6570253e38b34bf129dc3552',
+            name: 'ANIMAL',
+            genre: 'ACTION',
+            rating: 4,
+            is_deleted: false,
+            streamingLink: 'https://www.movies.com/animal',
+            created_date_time: '2023-12-06T07:39:07.603Z',
           },
         ],
       },
     },
   })
-  async list(@Query() queryParam: String, @Req() req: Request, @Res() res: Response) {
-    const moviesList: any = await this.moviesService.list(queryParam);
-    return res.status(HttpStatus.OK).send({ data: moviesList });
+  async list(
+    @Query() queryParam: String,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    try {
+      const moviesList: any = await this.moviesService.list(queryParam);
+      return res.status(HttpStatus.OK).send({ data: moviesList });
+    } catch (e) {
+      console.log(`Error in ${this.list.name}`, e);
+    }
   }
 
   @Post('/')
@@ -55,20 +62,26 @@ export class MoviesController {
     status: HttpStatus.OK,
     schema: {
       example: {
-        "message": "DASARA added successfully to movies list"
-      }
-    }
+        message: 'DASARA added successfully to movies list',
+      },
+    },
   })
   async saveMovie(
     @Body() moiveDTO: MoiveDTO,
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const saveRes = await this.moviesService.save(moiveDTO);
-    if (saveRes.status)
-      return res.status(HttpStatus.OK).send({ message: saveRes.message });
-    else
-      return res.status(HttpStatus.BAD_REQUEST).send({ message: saveRes.message });
+    try {
+      const saveRes = await this.moviesService.save(moiveDTO);
+      if (saveRes.status)
+        return res.status(HttpStatus.OK).send({ message: saveRes.message });
+      else
+        return res
+          .status(HttpStatus.BAD_REQUEST)
+          .send({ message: saveRes.message });
+    } catch (e) {
+      console.log(`Error in ${this.list.name}`, e);
+    }
   }
 
   @Put(':id')
@@ -79,9 +92,9 @@ export class MoviesController {
     status: HttpStatus.OK,
     schema: {
       example: {
-        "message": "Updated successfully"
-      }
-    }
+        message: 'Updated successfully',
+      },
+    },
   })
   async updateMovie(
     @Param() param: Object,
@@ -89,11 +102,19 @@ export class MoviesController {
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const updateRes = await this.moviesService.update(param, body);
-    if (updateRes)
-      return res.status(HttpStatus.OK).send({ message: 'Updated successfully' });
-    else
-      return res.status(HttpStatus.BAD_REQUEST).send({ message: 'Unable to update' });
+    try {
+      const updateRes = await this.moviesService.update(param, body);
+      if (updateRes)
+        return res
+          .status(HttpStatus.OK)
+          .send({ message: 'Updated successfully' });
+      else
+        return res
+          .status(HttpStatus.BAD_REQUEST)
+          .send({ message: 'Unable to update' });
+    } catch (e) {
+      console.log(`Error in ${this.list.name}`, e);
+    }
   }
 
   @Delete(':id')
@@ -102,19 +123,27 @@ export class MoviesController {
     status: HttpStatus.OK,
     schema: {
       example: {
-        "message": "Deleted successfully"
-      }
-    }
+        message: 'Deleted successfully',
+      },
+    },
   })
   async deleteMovie(
     @Param() param: Object,
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const deleteRes = await this.moviesService.delete(param)
-    if (deleteRes)
-      return res.status(HttpStatus.OK).send({ message: 'Deleted successfully' });
-    else
-      return res.status(HttpStatus.BAD_REQUEST).send({ message: 'Unable to delete' });
+    try {
+      const deleteRes = await this.moviesService.delete(param);
+      if (deleteRes)
+        return res
+          .status(HttpStatus.OK)
+          .send({ message: 'Deleted successfully' });
+      else
+        return res
+          .status(HttpStatus.BAD_REQUEST)
+          .send({ message: 'Unable to delete' });
+    } catch (e) {
+      console.log(`Error in ${this.list.name}`, e);
+    }
   }
 }
